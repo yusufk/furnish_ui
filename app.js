@@ -11,13 +11,16 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('container').appendChild(renderer.domElement);
 
 // Create a new Three.js object for each item in the list of objects and position it according to its location and position
-const objects = [
-  { name: 'chair', x: 0, y: 0, z: 0 },
-  { name: 'table', x: 1, y: 0, z: 0 },
-  { name: 'lamp', x: 0, y: 1, z: 0 },
-];
+const objects = [];
 
-objects.forEach(({ name, x, y, z }) => {
+const tableRows = document.querySelectorAll('tbody tr');
+tableRows.forEach(row => {
+  const name = row.querySelector('input[name="name[]"]').value;
+  const description = row.querySelector('input[name="description[]"]').value;
+  const x = parseFloat(row.querySelector('input[name="x[]"]').value);
+  const y = parseFloat(row.querySelector('input[name="y[]"]').value);
+  const z = parseFloat(row.querySelector('input[name="z[]"]').value);
+
   const geometry = new THREE.BoxGeometry(1, 1, 1);
   //assign either red, green, or blue based on a hash of the name
   const namehash = name.split("").reduce(function (a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
@@ -32,9 +35,12 @@ objects.forEach(({ name, x, y, z }) => {
   else {
     material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
   }
-  const cube = new THREE.Mesh(geometry, material);
-  cube.position.set(x, y, z);
-  scene.add(cube);
+  const object = new THREE.Mesh(geometry, material);
+  object.position.set(x, y, z);
+  object.name = name;
+  scene.add(object);
+
+  objects.push({ name, description, x, y, z });
 });
 
 // Create a new OrbitControls object and attach it to the camera
@@ -97,12 +103,33 @@ function render() {
 
 render();
 
+// Function to refresh the positions of the objects in the scene
+function refreshPositions() {
+  const tableRows = document.querySelectorAll('tbody tr');
+  tableRows.forEach((row, index) => {
+    const x = parseFloat(row.querySelector('input[name="x[]"]').value);
+    const y = parseFloat(row.querySelector('input[name="y[]"]').value);
+    const z = parseFloat(row.querySelector('input[name="z[]"]').value);
+
+    const object = objects[index];
+    object.x = x;
+    object.y = y;
+    object.z = z;
+
+    const mesh = scene.getObjectByName(object.name);
+    if (mesh) {
+      mesh.position.set(x, y, z);
+    }
+  });
+}
+
 // Add an event listener to the refresh button that calls a function to redraw the scene
 document.getElementById('refresh-button').addEventListener('click', () => {
   // Remove the floor and lights from the scene
   scene.remove(floor);
   scene.remove(wall1);
   scene.remove(wall2);
+  refreshPositions();
 
   // Create a new room with the updated dimensions
   createRoom();

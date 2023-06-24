@@ -10,7 +10,7 @@
       }
       #container {
         width: 100vw;
-        height: 90vh;
+        height: 70vh;
         overflow: hidden;
       }
     </style>
@@ -24,6 +24,7 @@
       <script type="module" src="app.js"></script>
     </div>
     <div id="controls">
+      <label for="room-dimensions">Room:</label><br/>
       <label for="width-input">Width:</label>
       <input type="number" id="width-input" value="10">
       <label for="height-input">Height:</label>
@@ -32,7 +33,41 @@
       <input type="number" id="depth-input" value="10">
       <br>
       <label for="objects-input">Objects:</label>
-      <input type="text" id="objects-input" />
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>X Position</th>
+            <th>Y Position</th>
+            <th>Z Position</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="text" name="name[]" value="Table" /></td>
+            <td><input type="text" name="description[]" value="Modern white wooden dining room table."/></td>
+            <td><input type="number" name="x[]" value="4"/></td>
+            <td><input type="number" name="y[]" value="0"/></td>
+            <td><input type="number" name="z[]" value="2" /></td>
+          </tr>
+          <tr>
+            <td><input type="text" name="name[]" value="Chair"/></td>
+            <td><input type="text" name="description[]" value="White plastic chair."/></td>
+            <td><input type="number" name="x[]" value="3"/></td>
+            <td><input type="number" name="y[]" value="0"/></td>
+            <td><input type="number" name="z[]" value="3"/></td>
+          </tr>
+          <tr>
+            <td><input type="text" name="name[]" value="Vase"/></td>
+            <td><input type="text" name="description[]" value="Clay vase."/></td>
+            <td><input type="number" name="x[]" value="4"/></td>
+            <td><input type="number" name="y[]" value="0"/></td>
+            <td><input type="number" name="z[]" value="1"/></td>
+          </tr>
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
       <button id="refresh-button">Refresh</button>
     </div>
   </body>
