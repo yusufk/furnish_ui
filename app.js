@@ -4,7 +4,7 @@ const renderer = new THREE.WebGLRenderer();
 
 // Add a camera to the scene and position it to view the 3D space
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 5, 10);
+camera.position.set(-15, 15, -15);
 
 // Create a WebGL renderer and set its size to match the dimensions of the container element
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -18,8 +18,20 @@ const objects = [
 ];
 
 objects.forEach(({ name, x, y, z }) => {
-  const geometry = new THREE.BoxGeometry(2, 2, 2);
-  const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  //assign either red, green, or blue based on a hash of the name
+  const namehash = name.split("").reduce(function (a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
+  let color = Math.floor(Math.abs(namehash) % 3);
+  var material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+  if (color == 0) {
+    material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+  }
+  else if (color == 1) {
+    material = new THREE.MeshStandardMaterial({ color: 0x0000ff });
+  }
+  else {
+    material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+  }
   const cube = new THREE.Mesh(geometry, material);
   cube.position.set(x, y, z);
   scene.add(cube);

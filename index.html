@@ -2,23 +2,37 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>My Three.js App</title>
+    <title>My 3D Room</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #container {
+        width: 100vw;
+        height: 90vh;
+        overflow: hidden;
+      }
+    </style>
   </head>
   <body>
-    <div id="container"></div>
-     <!-- Include the three.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <!-- Include the OrbitControls module -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
-    <script type="module" src="app.js"></script>
-    <div id="container"></div>
-    <div>
+    <div id="container">
+      <!-- Include the three.js library -->
+      <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+      <!-- Include the OrbitControls module -->
+      <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+      <script type="module" src="app.js"></script>
+    </div>
+    <div id="controls">
       <label for="width-input">Width:</label>
       <input type="number" id="width-input" value="10">
       <label for="height-input">Height:</label>
       <input type="number" id="height-input" value="4">
       <label for="depth-input">Depth:</label>
       <input type="number" id="depth-input" value="10">
+      <br>
+      <label for="objects-input">Objects:</label>
+      <input type="text" id="objects-input" />
       <button id="refresh-button">Refresh</button>
     </div>
   </body>
