@@ -38,37 +38,59 @@
           <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>X Position</th>
-            <th>Y Position</th>
-            <th>Z Position</th>
+            <th>Dimensions (W x H x D)</th>
+            <th>Position (X, Y, Z)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><input type="text" name="name[]" value="Table" /></td>
-            <td><input type="text" name="description[]" value="Modern white wooden dining room table."/></td>
-            <td><input type="number" name="x[]" value="4"/></td>
-            <td><input type="number" name="y[]" value="0"/></td>
-            <td><input type="number" name="z[]" value="2" /></td>
+            <td><input type="text" name="name[]" value="Chair"/></td>
+            <td><input type="text" name="description[]" value="A white, wooden chair."/></td>
+            <td>
+              width <input type="number" name="width[]" value="1"/> 
+              height <input type="number" name="height[]" value="1"/> 
+              depth <input type="number" name="depth[]" value="1"/> 
+            </td>
+            <td>
+              x <input type="number" name="x[]" value="0"/>
+              y <input type="number" name="y[]" value="0"/>
+              z <input type="number" name="z[]" value="1"/>
+            </td>
           </tr>
           <tr>
-            <td><input type="text" name="name[]" value="Chair"/></td>
-            <td><input type="text" name="description[]" value="White plastic chair."/></td>
-            <td><input type="number" name="x[]" value="3"/></td>
-            <td><input type="number" name="y[]" value="0"/></td>
-            <td><input type="number" name="z[]" value="3"/></td>
+            <td><input type="text" name="name[]" value="Table"/></td>
+            <td><input type="text" name="description[]" value="A wooden table."/></td>      
+            <td>
+              width <input type="number" name="width[]" value="2"/>
+              height <input type="number" name="height[]" value="4"/> 
+              depth <input type="number" name="depth[]" value="1"/> 
+            </td>
+            <td>
+              x <input type="number" name="x[]" value="5"/>
+              y <input type="number" name="y[]" value="5"/>
+              z <input type="number" name="z[]" value="0.5"/>
+            </td>
           </tr>
           <tr>
             <td><input type="text" name="name[]" value="Vase"/></td>
-            <td><input type="text" name="description[]" value="Clay vase."/></td>
-            <td><input type="number" name="x[]" value="4"/></td>
-            <td><input type="number" name="y[]" value="0"/></td>
-            <td><input type="number" name="z[]" value="1"/></td>
+            <td><input type="text" name="description[]" value="A decorative vase."/></td>      
+            <td>
+              width <input type="number" name="width[]" value="0.5"/>
+              height <input type="number" name="height[]" value="1"/> 
+              depth <input type="number" name="depth[]" value="0.5"/> 
+            </td>
+            <td>
+              x <input type="number" name="x[]" value="6"/>
+              y <input type="number" name="y[]" value="5.5"/>
+              z <input type="number" name="z[]" value="1.5"/>
+            </td>
           </tr>
           <!-- Add more rows as needed -->
         </tbody>
       </table>
       <button id="refresh-button">Refresh</button>
+      <!-- Add a button to decorate the room -->
+      <button id="decorate-button">Decorate</button>
     </div>
   </body>
 </html>

@@ -59,19 +59,19 @@ function createRoom() {
   const floorGeometry = new THREE.BoxGeometry(width, 0.1, depth);
   const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 });
   floor = new THREE.Mesh(floorGeometry, floorMaterial);
-  floor.position.set(0, -1, 0);
+  floor.position.set(0, 0, 0);
   scene.add(floor);
 
   const wall1Geometry = new THREE.BoxGeometry(0.1, height, depth);
   const wall1Material = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
   wall1 = new THREE.Mesh(wall1Geometry, wall1Material);
-  wall1.position.set(width / 2 - 0.05, height / 2 - 1, 0);
+  wall1.position.set(width / 2 - 0.05, height / 2, 0);
   scene.add(wall1);
 
   const wall2Geometry = new THREE.BoxGeometry(width, height, 0.1);
   const wall2Material = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
   wall2 = new THREE.Mesh(wall2Geometry, wall2Material);
-  wall2.position.set(0, height / 2 - 1, depth / 2 - 0.05);
+  wall2.position.set(0, height / 2, depth / 2 - 0.05);
   scene.add(wall2);
 }
 
@@ -122,6 +122,58 @@ function refreshPositions() {
     }
   });
 }
+
+// Add an event listener to the decorate button
+document.getElementById('decorate-button').addEventListener('click', async () => {
+  try {
+    // Get the room dimensions
+    const dim_x = parseFloat(document.getElementById('width-input').value);
+    const dim_y = parseFloat(document.getElementById('height-input').value);
+    const dim_z = parseFloat(document.getElementById('depth-input').value);
+
+    // Get the objects in the scene
+    const objects = [];
+    const tableRows = document.querySelectorAll('tbody tr');
+    tableRows.forEach((row, index) => {
+      const name = row.querySelector('input[name="name[]"]').value;
+      const description = row.querySelector('input[name="description[]"]').value;
+      const width = parseFloat(row.querySelector('input[name="width[]"]').value);
+      const height = parseFloat(row.querySelector('input[name="height[]"]').value);
+      const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
+      const x = parseFloat(row.querySelector('input[name="x[]"]').value);
+      const y = parseFloat(row.querySelector('input[name="y[]"]').value);
+      const z = parseFloat(row.querySelector('input[name="z[]"]').value);
+
+      objects.push({ name, description, dimensions: { dim_x: width, dim_y: height, dim_z: depth }, position: { x, y, z } });
+    });
+
+    // Create the request body
+    const requestBody = {
+      room_dimensions: { dim_x, dim_y, dim_z },
+      objects,
+    };
+
+    // Call the API to get the updated positions of the objects
+    const response = await fetch('https://furnish.azurewebsites.net/api/furnish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestBody),
+    });
+    const responseBody = await response.json();
+    
+    // Update the positions of the objects in the web form
+    responseBody.objects.forEach(({ name, position }) => {
+      const objectRow = document.querySelector(`tr[data-name="${name}"]`);
+      if (objectRow) {
+        objectRow.querySelector('input[name="x[]"]').value = position.x.toFixed(2);
+        objectRow.querySelector('input[name="y[]"]').value = position.y.toFixed(2);
+        objectRow.querySelector('input[name="z[]"]').value = position.z.toFixed(2);
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 // Add an event listener to the refresh button that calls a function to redraw the scene
 document.getElementById('refresh-button').addEventListener('click', () => {
