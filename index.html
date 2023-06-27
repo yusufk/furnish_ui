@@ -46,7 +46,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr data-name="object1">
             <td><input type="text" name="name[]" value="Chair"/></td>
             <td><input type="text" name="description[]" value="A white, wooden chair."/></td>
             <td>
@@ -55,17 +55,17 @@
               depth <input type="number" name="depth[]" value="1"/> 
             </td>
             <td>
-              x <input type="number" name="x[]" value="1"/>
+              x <input type="number" name="x[]" value="-2"/>
               y <input type="number" name="y[]" value="0.5"/>
               z <input type="number" name="z[]" value="0"/>
             </td>
           </tr>
-          <tr>
+          <tr  data-name="object2">
             <td><input type="text" name="name[]" value="Table"/></td>
             <td><input type="text" name="description[]" value="A wooden table."/></td>      
             <td>
               width <input type="number" name="width[]" value="2"/>
-              height <input type="number" name="height[]" value="1.5"/> 
+              height <input type="number" name="height[]" value="2"/> 
               depth <input type="number" name="depth[]" value="3"/> 
             </td>
             <td>
@@ -74,7 +74,7 @@
               z <input type="number" name="z[]" value="0"/>
             </td>
           </tr>
-          <tr>
+          <tr  data-name="object3">
             <td><input type="text" name="name[]" value="Vase"/></td>
             <td><input type="text" name="description[]" value="A decorative vase."/></td>      
             <td>
@@ -94,7 +94,7 @@
       <p id="approach"></p>
       <button id="refresh-button">Update model</button>
       <!-- Add a button to decorate the room -->
-      <button id="decorate-button">Get layout advice</button>
+      <button id="decorate-button">Layout co-pilot</button>
     </div>
   </body>
 </html>

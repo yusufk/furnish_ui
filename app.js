@@ -25,7 +25,7 @@ tableRows.forEach(row => {
   const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
 
 
-  const geometry = new THREE.BoxGeometry(height, width, depth);
+  const geometry = new THREE.BoxGeometry(width, height, depth);
   //assign either red, green, or blue based on a hash of the name
   const namehash = name.split("").reduce(function (a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
   let color = Math.floor(Math.abs(namehash) % 3);
@@ -114,7 +114,13 @@ function refreshPositions() {
     const x = parseFloat(row.querySelector('input[name="x[]"]').value);
     const y = parseFloat(row.querySelector('input[name="y[]"]').value);
     const z = parseFloat(row.querySelector('input[name="z[]"]').value);
+    const width = parseFloat(row.querySelector('input[name="width[]"]').value);
+    const height = parseFloat(row.querySelector('input[name="height[]"]').value);
+    const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
 
+    const geometry = new THREE.BoxGeometry(width, height, depth);
+
+    //Update the position and size of the object
     const object = objects[index];
     object.x = x;
     object.y = y;
@@ -122,6 +128,7 @@ function refreshPositions() {
 
     const mesh = scene.getObjectByName(object.name);
     if (mesh) {
+      mesh.geometry = geometry;
       mesh.position.set(x, y, z);
     }
   });
@@ -144,7 +151,8 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
       const width = parseFloat(row.querySelector('input[name="width[]"]').value);
       const height = parseFloat(row.querySelector('input[name="height[]"]').value);
       const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
-
+      // use data-name attribute to identify the object
+      const id = row.getAttribute('data-name');
       objects.push({ name, description, dimensions: { dim_x: width, dim_y: height, dim_z: depth } });
     });
 
@@ -163,8 +171,8 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
     const responseBody = await response.json();
     
     // Update the positions of the objects in the web form
-    responseBody.objects.forEach(({ name, position }) => {
-      const objectRow = document.querySelector(`tr[data-name="${name}"]`);
+    responseBody.objects.forEach(({ id, position }) => {
+      const objectRow = document.querySelector(`tr[data-name="${id}"]`);
       if (objectRow) {
         objectRow.querySelector('input[name="x[]"]').value = position.x.toFixed(2);
         objectRow.querySelector('input[name="y[]"]').value = position.y.toFixed(2);
