@@ -20,8 +20,12 @@ tableRows.forEach(row => {
   const x = parseFloat(row.querySelector('input[name="x[]"]').value);
   const y = parseFloat(row.querySelector('input[name="y[]"]').value);
   const z = parseFloat(row.querySelector('input[name="z[]"]').value);
+  const width = parseFloat(row.querySelector('input[name="width[]"]').value);
+  const height = parseFloat(row.querySelector('input[name="height[]"]').value);
+  const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
 
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
+
+  const geometry = new THREE.BoxGeometry(height, width, depth);
   //assign either red, green, or blue based on a hash of the name
   const namehash = name.split("").reduce(function (a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
   let color = Math.floor(Math.abs(namehash) % 3);
@@ -140,11 +144,8 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
       const width = parseFloat(row.querySelector('input[name="width[]"]').value);
       const height = parseFloat(row.querySelector('input[name="height[]"]').value);
       const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
-      const x = parseFloat(row.querySelector('input[name="x[]"]').value);
-      const y = parseFloat(row.querySelector('input[name="y[]"]').value);
-      const z = parseFloat(row.querySelector('input[name="z[]"]').value);
 
-      objects.push({ name, description, dimensions: { dim_x: width, dim_y: height, dim_z: depth }, position: { x, y, z } });
+      objects.push({ name, description, dimensions: { dim_x: width, dim_y: height, dim_z: depth } });
     });
 
     // Create the request body
@@ -170,6 +171,11 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
         objectRow.querySelector('input[name="z[]"]').value = position.z.toFixed(2);
       }
     });
+
+    // Display the approach used by the API
+    const approach = responseBody.approach;
+    const approachElement = document.getElementById('approach');
+    approachElement.textContent = `Approach: ${approach}`;
   } catch (error) {
     console.error(error);
   }
