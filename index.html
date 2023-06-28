@@ -1,100 +1,99 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>My 3D Room</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
-      #container {
-        width: 100vw;
-        height: 70vh;
-        overflow: hidden;
-      }
-      input[type="number"] {
-      width: 5ch;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="container">
+
+<head>
+  <meta charset="utf-8">
+  <title>My 3D Room</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <div id="container">
+    <div id="view">
       <!-- Include the three.js library -->
       <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
       <!-- Include the OrbitControls module -->
       <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
       <script type="module" src="app.js"></script>
     </div>
-    <div id="controls">
-      <label for="room-dimensions">Room:</label><br/>
-      <label for="width-input">Width:</label>
-      <input type="number" id="width-input" value="10">
-      <label for="height-input">Height:</label>
-      <input type="number" id="height-input" value="4">
-      <label for="depth-input">Depth:</label>
-      <input type="number" id="depth-input" value="10">
-      <br>
-      <label for="objects-input">Objects:</label>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Dimensions (W x H x D)</th>
-            <th>Position (X, Y, Z)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr data-name="object1">
-            <td><input type="text" name="name[]" value="Chair"/></td>
-            <td><input type="text" name="description[]" value="A white, wooden chair."/></td>
-            <td>
-              width <input type="number" name="width[]" value="1"/> 
-              height <input type="number" name="height[]" value="1"/> 
-              depth <input type="number" name="depth[]" value="1"/> 
-            </td>
-            <td>
-              x <input type="number" name="x[]" value="-2"/>
-              y <input type="number" name="y[]" value="0.5"/>
-              z <input type="number" name="z[]" value="0"/>
-            </td>
-          </tr>
-          <tr  data-name="object2">
-            <td><input type="text" name="name[]" value="Table"/></td>
-            <td><input type="text" name="description[]" value="A wooden table."/></td>      
-            <td>
-              width <input type="number" name="width[]" value="2"/>
-              height <input type="number" name="height[]" value="2"/> 
-              depth <input type="number" name="depth[]" value="3"/> 
-            </td>
-            <td>
-              x <input type="number" name="x[]" value="0"/>
-              y <input type="number" name="y[]" value="1"/>
-              z <input type="number" name="z[]" value="0"/>
-            </td>
-          </tr>
-          <tr  data-name="object3">
-            <td><input type="text" name="name[]" value="Vase"/></td>
-            <td><input type="text" name="description[]" value="A decorative vase."/></td>      
-            <td>
-              width <input type="number" name="width[]" value="0.5"/>
-              height <input type="number" name="height[]" value="1"/> 
-              depth <input type="number" name="depth[]" value="0.5"/> 
-            </td>
-            <td>
-              x <input type="number" name="x[]" value="0"/>
-              y <input type="number" name="y[]" value="2"/>
-              z <input type="number" name="z[]" value="0"/>
-            </td>
-          </tr>
-          <!-- Add more rows as needed -->
-        </tbody>
-      </table>
-      <p id="approach"></p>
-      <button id="refresh-button">Update model</button>
-      <!-- Add a button to decorate the room -->
-      <button id="decorate-button">Layout co-pilot</button>
+    <div id="columns">
+      <div id="column1">
+        <div id="controls">
+          <label for="room-dimensions">Room:</label><br />
+          <label for="width-input">Width:</label>
+          <input type="number" id="width-input" value="10">
+          <label for="height-input">Height:</label>
+          <input type="number" id="height-input" value="4">
+          <label for="depth-input">Depth:</label>
+          <input type="number" id="depth-input" value="10">
+          <button id="refresh-button">Update 3D model</button><br/>
+          <label for="objects-input">Objects:</label>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Dimensions (W x H x D)</th>
+                <th>Position (X, Y, Z)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-name="object1">
+                <td><input type="text" name="name[]" value="Chair" /></td>
+                <td><input type="text" name="description[]" value="A white, wooden chair." /></td>
+                <td>
+                  width <input type="number" name="width[]" value="1" />
+                  height <input type="number" name="height[]" value="1" />
+                  depth <input type="number" name="depth[]" value="1" />
+                </td>
+                <td>
+                  x <input type="number" name="x[]" value="2" />
+                  y <input type="number" name="y[]" value="0.5" />
+                  z <input type="number" name="z[]" value="-3" />
+                </td>
+              </tr>
+              <tr data-name="object2">
+                <td><input type="text" name="name[]" value="Table" /></td>
+                <td><input type="text" name="description[]" value="A wooden table." /></td>
+                <td>
+                  width <input type="number" name="width[]" value="2" />
+                  height <input type="number" name="height[]" value="1.5" />
+                  depth <input type="number" name="depth[]" value="3" />
+                </td>
+                <td>
+                  x <input type="number" name="x[]" value="0" />
+                  y <input type="number" name="y[]" value="0.75" />
+                  z <input type="number" name="z[]" value="0" />
+                </td>
+              </tr>
+              <tr data-name="object3">
+                <td><input type="text" name="name[]" value="Vase" /></td>
+                <td><input type="text" name="description[]" value="A decorative vase." /></td>
+                <td>
+                  width <input type="number" name="width[]" value="0.5" />
+                  height <input type="number" name="height[]" value="1" />
+                  depth <input type="number" name="depth[]" value="0.5" />
+                </td>
+                <td>
+                  x <input type="number" name="x[]" value="-3" />
+                  y <input type="number" name="y[]" value="0.5" />
+                  z <input type="number" name="z[]" value="0" />
+                </td>
+              </tr>
+              <!-- Add more rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="column2">
+        <p id="approach"></p>
+        <label id="status-label">Status: Ready</label><br/> <!-- Add a label for the status -->
+        <button id="decorate-button">Invoke Layout Co-Designer</button>
+      </div>
     </div>
-  </body>
+  </div>
+  </div>
+</body>
+
 </html>

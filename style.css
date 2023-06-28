@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+  }
+
+  #container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #view {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  #columns {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #column1 {
+    flex: 2;
+    background-color: #eee;
+  }
+
+  #column2 {
+    flex: 1;
+    background-color: #ddd;
+  }
+
+  input[type="number"] {
+    width: 5ch;
+  }
