@@ -160,7 +160,7 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
       const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
       // use data-name attribute to identify the object
       const id = row.getAttribute('data-name');
-      objects.push({ name, description, dimensions: { dim_x: width, dim_y: height, dim_z: depth } });
+      objects.push({ id, name, description, dimensions: { dim_x: width, dim_y: height, dim_z: depth } });
     });
 
     // Create the request body
