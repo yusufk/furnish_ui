@@ -115,6 +115,9 @@ function refreshPositions() {
     const x = parseFloat(row.querySelector('input[name="x[]"]').value);
     const y = parseFloat(row.querySelector('input[name="y[]"]').value);
     const z = parseFloat(row.querySelector('input[name="z[]"]').value);
+    const rx = parseFloat(row.querySelector('input[name="rx[]"]').value);
+    const ry = parseFloat(row.querySelector('input[name="ry[]"]').value);
+    const rz = parseFloat(row.querySelector('input[name="rz[]"]').value);
     const width = parseFloat(row.querySelector('input[name="width[]"]').value);
     const height = parseFloat(row.querySelector('input[name="height[]"]').value);
     const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
@@ -126,11 +129,12 @@ function refreshPositions() {
     object.x = x;
     object.y = y;
     object.z = z;
-
+    object.rotation = { x: rx, y: ry, z: rz };
     const mesh = scene.getObjectByName(object.name);
     if (mesh) {
       mesh.geometry = geometry;
       mesh.position.set(x, y, z);
+      mesh.rotation.set(rx, ry, rz);
     }
   });
 }
@@ -182,12 +186,16 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
     statusLabel.innerText = 'Status: Done!';
 
     // Update the positions of the objects in the web form
-    responseBody.objects.forEach(({ id, position }) => {
+    responseBody.objects.forEach(({ id, position, rotation }) => {
       const objectRow = document.querySelector(`tr[data-name="${id}"]`);
       if (objectRow) {
         objectRow.querySelector('input[name="x[]"]').value = position.x.toFixed(2);
         objectRow.querySelector('input[name="y[]"]').value = position.y.toFixed(2);
         objectRow.querySelector('input[name="z[]"]').value = position.z.toFixed(2);
+        // Update the rotation of the object
+        objectRow.querySelector('input[name="rx[]"]').value = rotation.x.toFixed(2);
+        objectRow.querySelector('input[name="ry[]"]').value = rotation.y.toFixed(2);
+        objectRow.querySelector('input[name="rz[]"]').value = rotation.z.toFixed(2);
       }
     });
 
