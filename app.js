@@ -1,4 +1,4 @@
-import * as THREE from 'three'; 
+import * as THREE from 'three';
 import { OrbitControls } from 'https://unpkg.com/three@0.154.0/examples/jsm/controls/OrbitControls.js';
 
 // Create a new Three.js scene and renderer
@@ -7,7 +7,7 @@ const renderer = new THREE.WebGLRenderer();
 
 // Add a camera to the scene and position it to view the 3D space
 const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(-15, 5, -15);
+camera.position.set(-15, 5, 15);
 
 // Create a WebGL renderer and set its size to match the dimensions of the container element
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -15,6 +15,9 @@ document.getElementById('view').appendChild(renderer.domElement);
 
 // Create a new Three.js object for each item in the list of objects and position it according to its location and position
 const objects = [];
+
+// Create an array to hold the lights
+const lights = [];
 
 const tableRows = document.querySelectorAll('tbody tr');
 tableRows.forEach(row => {
@@ -45,7 +48,7 @@ tableRows.forEach(row => {
   const object = new THREE.Mesh(geometry, material);
   object.position.set(x, y, z);
   object.name = name;
-  
+
   scene.add(object);
 
   objects.push({ name, description, x, y, z });
@@ -73,30 +76,32 @@ function createRoom() {
   const wall1Geometry = new THREE.BoxGeometry(0.1, height, depth);
   const wall1Material = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
   wall1 = new THREE.Mesh(wall1Geometry, wall1Material);
-  wall1.position.set(width / 2 - 0.05, height / 2, 0);
+  wall1.position.set(width / 2, height / 2, 0);
   scene.add(wall1);
 
   const wall2Geometry = new THREE.BoxGeometry(width, height, 0.1);
   const wall2Material = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
   wall2 = new THREE.Mesh(wall2Geometry, wall2Material);
-  wall2.position.set(0, height / 2, depth / 2 - 0.05);
+  wall2.position.set(0, height / 2, -(depth / 2));
   scene.add(wall2);
+
+  // Create a grid of lights on the ceiling
+
+  const lightIntensity = 0.5;
+  const lightDistance = 10;
+
+  for (let lx = -~~(width/2); lx <= ~~(width/2); lx=lx+2) {
+    for (let lz = -~~(depth/2); lz <= ~~(depth/2); lz=lz+2) {
+      const pointLight = new THREE.PointLight(0xffffff, lightIntensity, lightDistance);
+      pointLight.position.set(lx, 4, lz);
+      scene.add(pointLight);
+      lights.push(pointLight);
+    }
+  }
+
 }
 
 createRoom();
-
-// Create a grid of lights on the ceiling
-
-const lightIntensity = 0.5;
-const lightDistance = 10;
-
-for (let x = -5; x <= 5; x++) {
-  for (let z = -5; z <= 5; z++) {
-    const pointLight = new THREE.PointLight(0xffffff, lightIntensity, lightDistance);
-    pointLight.position.set(x, 4, z);
-    scene.add(pointLight);
-  }
-}
 
 // Render the scene using the WebGL renderer
 function render() {
@@ -218,6 +223,11 @@ document.getElementById('refresh-button').addEventListener('click', () => {
   scene.remove(floor);
   scene.remove(wall1);
   scene.remove(wall2);
+  // Remove lights from the scene
+  lights.forEach((light) => {
+    scene.remove(light);
+  });
+
   refreshPositions();
 
   // Create a new room with the updated dimensions
