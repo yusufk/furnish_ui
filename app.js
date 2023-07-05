@@ -1,3 +1,6 @@
+import * as THREE from 'three'; 
+import { OrbitControls } from 'https://unpkg.com/three@0.154.0/examples/jsm/controls/OrbitControls.js';
+
 // Create a new Three.js scene and renderer
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
@@ -49,7 +52,7 @@ tableRows.forEach(row => {
 });
 
 // Create a new OrbitControls object and attach it to the camera
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 
 let floor, wall1, wall2;
 
