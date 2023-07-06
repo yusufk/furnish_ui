@@ -10,9 +10,13 @@
 
 <body>
   <div id="container">
-    <div id="view">
-      <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
-      <script type="importmap">
+    <div id="rows">
+      <div id="row1">
+        <div id="columns">
+          <div id="column1">
+            <div id="view">
+              <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+              <script type="importmap">
         {
           "imports": {
             "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
@@ -20,34 +24,41 @@
           }
         }
       </script>
-      <script type="module" src="app.js"></script>
-    </div>
-    <div id="columns">
-      <div id="column1">
+              <script type="module" src="app.js"></script>
+            </div>
+          </div>
+          <div id="column2">
+            <p id="approach"></p>
+            <button id="decorate-button">AI Co-Designer</button>
+            <label id="status-label">Status: Ready</label><br /> <!-- Add a label for the status -->
+          </div>
+        </div>
+      </div>
+      <div id="row2">
         <div id="controls">
-          <label for="room-dimensions">Room:</label><br />
+          <label for="room-dimensions">Room details</label><br />
           <label for="width-input">Width:</label>
           <input type="number" id="width-input" value="10">
           <label for="height-input">Height:</label>
           <input type="number" id="height-input" value="4">
           <label for="depth-input">Depth:</label>
           <input type="number" id="depth-input" value="10">
-          <button id="refresh-button">Update 3D model</button><br/>
+          <button id="refresh-button">Update 3D model</button><br />
           <label for="objects-input">Objects:</label>
           <table>
             <thead>
               <tr>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Dimensions (W x H x D)</th>
+                <th>Dimensions (W, H, D)</th>
                 <th>Position (x, y, z)</th>
-                <th>Rotation (rx,ry,rz)</th>
+                <th>Rotation (rx, ry, rz)</th>
               </tr>
             </thead>
             <tbody>
               <tr data-name="object1">
-                <td><input type="text" name="name[]" value="Chair" /></td>
-                <td><input type="text" name="description[]" value="A white, wooden chair." /></td>
+                <td><input type="text" name="name[]" value="Chair" class="objectname"/></td>
+                <td><input type="text" name="description[]" value="A white, wooden chair." class="objectdescription"/></td>
                 <td>
                   <input type="number" name="width[]" value="1" />
                   <input type="number" name="height[]" value="1" />
@@ -65,8 +76,8 @@
                 </td>
               </tr>
               <tr data-name="object2">
-                <td><input type="text" name="name[]" value="Table" /></td>
-                <td><input type="text" name="description[]" value="A wooden table." /></td>
+                <td><input type="text" name="name[]" value="Table" class="objectname" /></td>
+                <td><input type="text" name="description[]" value="A wooden table." class="objectdescription"/></td>
                 <td>
                   <input type="number" name="width[]" value="2" />
                   <input type="number" name="height[]" value="1.5" />
@@ -84,8 +95,8 @@
                 </td>
               </tr>
               <tr data-name="object3">
-                <td><input type="text" name="name[]" value="Vase" /></td>
-                <td><input type="text" name="description[]" value="A decorative vase." /></td>
+                <td><input type="text" name="name[]" value="Vase" class="objectname" /></td>
+                <td><input type="text" name="description[]" value="A decorative vase." class="objectdescription"/></td>
                 <td>
                   <input type="number" name="width[]" value="0.5" />
                   <input type="number" name="height[]" value="1" />
@@ -107,13 +118,7 @@
           </table>
         </div>
       </div>
-      <div id="column2">
-        <p id="approach"></p>
-        <label id="status-label">Status: Ready</label><br/> <!-- Add a label for the status -->
-        <button id="decorate-button">Invoke Layout Co-Designer</button>
-      </div>
     </div>
-  </div>
   </div>
 </body>
 
