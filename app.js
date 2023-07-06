@@ -137,12 +137,11 @@ function refreshPositions() {
     object.x = x;
     object.y = y;
     object.z = z;
-    object.rotation = { x: rx, y: ry, z: rz };
     const mesh = scene.getObjectByName(object.name);
     if (mesh) {
       mesh.geometry = geometry;
       mesh.position.set(x, y, z);
-      mesh.rotation.set(rx, ry, rz);
+      mesh.rotation.set(THREE.MathUtils.degToRad(rx), THREE.MathUtils.degToRad(ry), THREE.MathUtils.degToRad(rz));
     }
   });
 }
