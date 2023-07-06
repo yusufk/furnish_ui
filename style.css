@@ -30,7 +30,7 @@ body {
   flex: 2;
   height: 100vh;
   background-color: #bbb;
-  padding: 20px;
+  padding: 10px;
 }
 
 #columns {
@@ -40,14 +40,27 @@ body {
 }
 
 #column1 {
-  flex: 0 0 80vw;
+  flex: 0 0 75vw;
   background-color: #eee;
-  height: 70vh;
+  height: 65vh;
 }
 
 #column2 {
-  flex: 0 0 20vw;
+  flex: 0 0 25vw;
   background-color: #ddd;
+  padding: 5px;
+}
+
+#column3 {
+  flex: 0 0 75vw;
+  background-color: #eee;
+  height: 65vh;
+}
+
+#column4 {
+  flex: 0 0 25vw;
+  background-color: #ddd;
+  padding: 5px;
 }
 
 input[type="number"] {
