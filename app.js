@@ -161,6 +161,9 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
     // Display the "fetching" status
     statusLabel.innerText = 'Status: Fetching...';
 
+    // Get any suggestion from the user
+    const suggestion = document.getElementById('suggestion').value;
+
     // Get the room dimensions
     const dim_x = parseFloat(document.getElementById('width-input').value);
     const dim_y = parseFloat(document.getElementById('height-input').value);
@@ -184,6 +187,7 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
     const requestBody = {
       room_dimensions: { dim_x, dim_y, dim_z },
       objects,
+      suggestion,
     };
 
     // Call the API to get the updated positions of the objects
