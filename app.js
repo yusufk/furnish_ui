@@ -223,6 +223,8 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
     refreshPositions();
   } catch (error) {
     console.error(error);
+        // Display the "Error" status
+        statusLabel.innerText = 'Status: Error!';
   }
 });
 
