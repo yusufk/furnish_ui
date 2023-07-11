@@ -5,15 +5,16 @@ import { OrbitControls } from 'https://unpkg.com/three@0.154.0/examples/jsm/cont
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
 
-// Add a camera to the scene and position it to view the 3D space
-const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(-15, 15, 15);
-
 // Get a reference to the column element
 const column = document.getElementById('column1');
 
 // Create a WebGL renderer and set its size to match the dimensions of the column element
 renderer.setSize(column.offsetWidth, column.offsetHeight);
+
+// Add a camera to the scene and position it to view the 3D space
+const camera = new THREE.PerspectiveCamera(30, column.offsetWidth /  column.offsetHeight, 0.1, 1000);
+camera.position.set(-15, 15, 15);
+
 // Create a WebGL renderer and set its size to match the dimensions of the container element
 //renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('view').appendChild(renderer.domElement);
