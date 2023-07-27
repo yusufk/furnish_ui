@@ -6,6 +6,11 @@ Furnish UI is a proof-of-concept application that uses Azure openAI Codex to pla
 
 Visit https://yusuf.kaka.co.za/furnish_ui/ to see the demo. You can update the room and object parameters on the page manually and then, to get the AI's recommended layout, hit the "Invoke Layout Co-Designer" button. The AI algorithm will automatically adjust the size and position of the objects to fit the room.
 
+## Related project
+
+This UI connects to an API deployed on Azure Functions, which wraps the interaction with the DaVinci-3.5 LLM. The project can be found here: 
+https://github.com/yusufk/FurnisherFunction
+
 ## Contributing
 
 If you would like to contribute to Furnish UI, please fork the repository and submit a pull request. We welcome contributions of all kinds, including bug fixes, feature requests, and documentation improvements.
