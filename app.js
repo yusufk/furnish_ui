@@ -191,7 +191,7 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
     };
 
     // Call the API to get the updated positions of the objects
-    const response = await fetch('https://furnisher.azurewebsites.net/api/furnish', {
+    const response = await fetch('https://furnishcopilot.azurewebsites.net/api/furnish', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBody),
