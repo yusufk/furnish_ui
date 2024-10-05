@@ -35,22 +35,11 @@ tableRows.forEach(row => {
   const width = parseFloat(row.querySelector('input[name="width[]"]').value);
   const height = parseFloat(row.querySelector('input[name="height[]"]').value);
   const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
-
-
+  const colour = row.querySelector('input[name="colour[]"]').value;
   const geometry = new THREE.BoxGeometry(width, height, depth);
-  //assign either red, green, or blue based on a hash of the name
   const namehash = name.split("").reduce(function (a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
   let color = Math.floor(Math.abs(namehash) % 3);
-  var material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-  if (color == 0) {
-    material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-  }
-  else if (color == 1) {
-    material = new THREE.MeshStandardMaterial({ color: 0x0000ff });
-  }
-  else {
-    material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-  }
+  var material = new THREE.MeshStandardMaterial({ color: new THREE.Color(colour).convertSRGBToLinear() });
   const object = new THREE.Mesh(geometry, material);
   object.position.set(x, y, z);
   object.name = name;
@@ -135,8 +124,10 @@ function refreshPositions() {
     const width = parseFloat(row.querySelector('input[name="width[]"]').value);
     const height = parseFloat(row.querySelector('input[name="height[]"]').value);
     const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
+    const colour = row.querySelector('input[name="colour[]"]').value;
 
     const geometry = new THREE.BoxGeometry(width, height, depth);
+    const material = new THREE.MeshStandardMaterial({ color: new THREE.Color(colour).convertSRGBToLinear() });
 
     //Update the position and size of the object
     const object = objects[index];
@@ -146,6 +137,7 @@ function refreshPositions() {
     const mesh = scene.getObjectByName(object.name);
     if (mesh) {
       mesh.geometry = geometry;
+      mesh.material = material;
       mesh.position.set(x, y, z);
       mesh.rotation.set(THREE.MathUtils.degToRad(rx), THREE.MathUtils.degToRad(ry), THREE.MathUtils.degToRad(rz));
     }
@@ -178,9 +170,10 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
       const width = parseFloat(row.querySelector('input[name="width[]"]').value);
       const height = parseFloat(row.querySelector('input[name="height[]"]').value);
       const depth = parseFloat(row.querySelector('input[name="depth[]"]').value);
+      const colour = row.querySelector('input[name="colour[]"]').value
       // use data-name attribute to identify the object
       const id = row.getAttribute('data-name');
-      objects.push({ id, name, description, dimensions: { dim_x: width, dim_y: height, dim_z: depth } });
+      objects.push({ id, name, description, colour, dimensions: { dim_x: width, dim_y: height, dim_z: depth } });
     });
 
     // Create the request body
@@ -203,9 +196,10 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
     statusLabel.innerText = 'Status: Done!';
 
     // Update the positions of the objects in the web form
-    responseBody.objects.forEach(({ id, position, rotation }) => {
+    responseBody.objects.forEach(({ id, colour, position, rotation }) => {
       const objectRow = document.querySelector(`tr[data-name="${id}"]`);
       if (objectRow) {
+        objectRow.querySelector('input[name="colour[]"]').value = colour;
         objectRow.querySelector('input[name="x[]"]').value = position.x.toFixed(2);
         objectRow.querySelector('input[name="y[]"]').value = position.y.toFixed(2);
         objectRow.querySelector('input[name="z[]"]').value = position.z.toFixed(2);
