@@ -1,0 +1,6 @@
+name = "furnisher-proxy"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# FUNCTION_KEY is set as a secret, NOT here:
+#   wrangler secret put FUNCTION_KEY
