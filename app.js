@@ -183,8 +183,10 @@ document.getElementById('decorate-button').addEventListener('click', async () =>
       suggestion,
     };
 
-    // Call the API to get the updated positions of the objects
-    const response = await fetch('https://furnishcopilot.azurewebsites.net/api/furnish', {
+    // Call the API (via the Cloudflare Worker proxy, which holds the function
+    // key server-side and enforces CORS — the Azure Function is no longer
+    // exposed anonymously).
+    const response = await fetch('https://furnisher-proxy.yusufk.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBody),
