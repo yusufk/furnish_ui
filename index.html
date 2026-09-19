@@ -1,131 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <title>My 3D Room</title>
+  <title>AI Room Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Describe a room and its furniture, and let AI arrange the layout in 3D.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛋️</text></svg>">
   <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
   <div id="container">
-    <div id="rows">
-      <div id="row1">
-        <div id="columns">
-          <div id="column1">
-            <div id="view">
-              <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
-              <script type="importmap">
-        {
-          "imports": {
-            "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+    <!-- 3D viewport -->
+    <div id="column1">
+      <div id="view">
+        <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+        <script type="importmap">
+          {
+            "imports": {
+              "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+              "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+            }
           }
-        }
-      </script>
-              <script type="module" src="app.js"></script>
-            </div>
-          </div>
-          <div id="column2">
-            <h1>AI Room designer</h1>
-            <p id="approach"></p>
-            <label id="status-label">Status: Ready</label><br /> <!-- Add a label for the status -->
-            <button id="decorate-button">AI Co-Designer</button>
-            <input type="text" id="suggestion" placeholder="Enter your suggestion here" />
-          </div>
-        </div>
+        </script>
+        <script type="module" src="app.js"></script>
       </div>
-      <div id="row2">
-        <div id="controls">
-          <label for="room-dimensions">Room Dimensions</label><br />
-          <label for="width-input">Width:</label>
-          <input type="number" id="width-input" value="10">
-          <label for="height-input">Height:</label>
-          <input type="number" id="height-input" value="4">
-          <label for="depth-input">Depth:</label>
-          <input type="number" id="depth-input" value="10">
-          <button id="refresh-button">Update 3D model</button><br />
-          <label for="objects-input">Objects:</label>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Colour</th>
-                <th>Dimensions (W, H, D)</th>
-                <th>Position (x, y, z)</th>
-                <th>Rotation (rx, ry, rz)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr data-name="object1">
-                <td><input type="text" name="name[]" value="Chair" class="objectname"/></td>
-                <td><input type="text" name="description[]" value="A wooden chair." class="objectdescription"/></td>
-                <td><input type="text" name="colour[]" value="#ff0000" class="objectcolour"/></td>
-                <td>
-                  <input type="number" name="width[]" value="1" />
-                  <input type="number" name="height[]" value="1" />
-                  <input type="number" name="depth[]" value="1" />
-                </td>
-                <td>
-                  <input type="number" name="x[]" value="2" />
-                  <input type="number" name="y[]" value="0.5" />
-                  <input type="number" name="z[]" value="3" />
-                </td>
-                <td>
-                  <input type="number" name="rx[]" value="0" />
-                  <input type="number" name="ry[]" value="0" />
-                  <input type="number" name="rz[]" value="0" />
-                </td>
-              </tr>
-              <tr data-name="object2">
-                <td><input type="text" name="name[]" value="Table" class="objectname" /></td>
-                <td><input type="text" name="description[]" value="A wooden table." class="objectdescription"/></td>
-                <td><input type="text" name="colour[]" value="#0000ff" class="objectcolour"/></td>
-                <td>
-                  <input type="number" name="width[]" value="2" />
-                  <input type="number" name="height[]" value="1.5" />
-                  <input type="number" name="depth[]" value="3" />
-                </td>
-                <td>
-                  <input type="number" name="x[]" value="0" />
-                  <input type="number" name="y[]" value="0.75" />
-                  <input type="number" name="z[]" value="0" />
-                </td>
-                <td>
-                  <input type="number" name="rx[]" value="0" />
-                  <input type="number" name="ry[]" value="0" />
-                  <input type="number" name="rz[]" value="0" />
-                </td>
-              </tr>
-              <tr data-name="object3">
-                <td><input type="text" name="name[]" value="Vase" class="objectname" /></td>
-                <td><input type="text" name="description[]" value="A decorative vase." class="objectdescription"/></td>
-                <td><input type="text" name="colour[]" value="#00ff00" class="objectcolour"/></td>
-                <td>
-                  <input type="number" name="width[]" value="0.5" />
-                  <input type="number" name="height[]" value="1" />
-                  <input type="number" name="depth[]" value="0.5" />
-                </td>
-                <td>
-                  <input type="number" name="x[]" value="-3" />
-                  <input type="number" name="y[]" value="0.5" />
-                  <input type="number" name="z[]" value="0" />
-                </td>
-                <td>
-                  <input type="number" name="rx[]" value="0" />
-                  <input type="number" name="ry[]" value="0" />
-                  <input type="number" name="rz[]" value="0" />
-                </td>
-              </tr>
-              <!-- Add more rows as needed -->
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <p class="viewport-hint">Drag to orbit · scroll or pinch to zoom</p>
     </div>
+
+    <!-- AI panel -->
+    <aside id="column2">
+      <h1>AI Room Designer</h1>
+      <p class="tagline">Describe your room and furniture below, then let the AI arrange it.</p>
+
+      <div class="ai-actions">
+        <input type="text" id="suggestion" placeholder="Optional: a hint for the AI (e.g. cosy reading corner)" />
+        <button id="decorate-button" class="btn btn-primary">✨ AI Co-Designer</button>
+      </div>
+
+      <div class="status" id="status-wrap">
+        <label id="status-label">Status: Ready</label>
+      </div>
+
+      <p id="approach" class="approach"></p>
+    </aside>
   </div>
+
+  <!-- Controls / editor -->
+  <section id="controls">
+    <div class="controls-inner">
+      <fieldset class="room-dims">
+        <legend>Room dimensions</legend>
+        <div class="dim-grid">
+          <label>Width<input type="number" id="width-input" value="10"></label>
+          <label>Height<input type="number" id="height-input" value="4"></label>
+          <label>Depth<input type="number" id="depth-input" value="10"></label>
+          <button id="refresh-button" class="btn btn-secondary">Update 3D model</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="objects">
+        <legend>Objects</legend>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Colour</th>
+              <th>Dimensions (W, H, D)</th>
+              <th>Position (x, y, z)</th>
+              <th>Rotation (rx, ry, rz)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-name="object1">
+              <td data-label="Name"><input type="text" name="name[]" value="Chair" class="objectname" /></td>
+              <td data-label="Description"><input type="text" name="description[]" value="A wooden chair." class="objectdescription" /></td>
+              <td data-label="Colour"><input type="color" name="colour[]" value="#ff0000" class="objectcolour" /></td>
+              <td data-label="Dimensions (W, H, D)" class="triple">
+                <input type="number" name="width[]" value="1" aria-label="Width" />
+                <input type="number" name="height[]" value="1" aria-label="Height" />
+                <input type="number" name="depth[]" value="1" aria-label="Depth" />
+              </td>
+              <td data-label="Position (x, y, z)" class="triple">
+                <input type="number" name="x[]" value="2" aria-label="x" />
+                <input type="number" name="y[]" value="0.5" aria-label="y" />
+                <input type="number" name="z[]" value="3" aria-label="z" />
+              </td>
+              <td data-label="Rotation (rx, ry, rz)" class="triple">
+                <input type="number" name="rx[]" value="0" aria-label="rx" />
+                <input type="number" name="ry[]" value="0" aria-label="ry" />
+                <input type="number" name="rz[]" value="0" aria-label="rz" />
+              </td>
+            </tr>
+            <tr data-name="object2">
+              <td data-label="Name"><input type="text" name="name[]" value="Table" class="objectname" /></td>
+              <td data-label="Description"><input type="text" name="description[]" value="A wooden table." class="objectdescription" /></td>
+              <td data-label="Colour"><input type="color" name="colour[]" value="#0000ff" class="objectcolour" /></td>
+              <td data-label="Dimensions (W, H, D)" class="triple">
+                <input type="number" name="width[]" value="2" aria-label="Width" />
+                <input type="number" name="height[]" value="1.5" aria-label="Height" />
+                <input type="number" name="depth[]" value="3" aria-label="Depth" />
+              </td>
+              <td data-label="Position (x, y, z)" class="triple">
+                <input type="number" name="x[]" value="0" aria-label="x" />
+                <input type="number" name="y[]" value="0.75" aria-label="y" />
+                <input type="number" name="z[]" value="0" aria-label="z" />
+              </td>
+              <td data-label="Rotation (rx, ry, rz)" class="triple">
+                <input type="number" name="rx[]" value="0" aria-label="rx" />
+                <input type="number" name="ry[]" value="0" aria-label="ry" />
+                <input type="number" name="rz[]" value="0" aria-label="rz" />
+              </td>
+            </tr>
+            <tr data-name="object3">
+              <td data-label="Name"><input type="text" name="name[]" value="Vase" class="objectname" /></td>
+              <td data-label="Description"><input type="text" name="description[]" value="A decorative vase." class="objectdescription" /></td>
+              <td data-label="Colour"><input type="color" name="colour[]" value="#00ff00" class="objectcolour" /></td>
+              <td data-label="Dimensions (W, H, D)" class="triple">
+                <input type="number" name="width[]" value="0.5" aria-label="Width" />
+                <input type="number" name="height[]" value="1" aria-label="Height" />
+                <input type="number" name="depth[]" value="0.5" aria-label="Depth" />
+              </td>
+              <td data-label="Position (x, y, z)" class="triple">
+                <input type="number" name="x[]" value="-3" aria-label="x" />
+                <input type="number" name="y[]" value="0.5" aria-label="y" />
+                <input type="number" name="z[]" value="0" aria-label="z" />
+              </td>
+              <td data-label="Rotation (rx, ry, rz)" class="triple">
+                <input type="number" name="rx[]" value="0" aria-label="rx" />
+                <input type="number" name="ry[]" value="0" aria-label="ry" />
+                <input type="number" name="rz[]" value="0" aria-label="rz" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </fieldset>
+    </div>
+  </section>
 </body>
 
 </html>
