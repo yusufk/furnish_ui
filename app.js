@@ -111,6 +111,22 @@ function render() {
 
 render();
 
+// Keep the renderer and camera in sync with the viewport (responsive / mobile).
+function handleResize() {
+  const w = column.clientWidth;
+  const h = column.clientHeight;
+  if (w === 0 || h === 0) return;
+  renderer.setSize(w, h, false);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', handleResize);
+window.addEventListener('orientationchange', handleResize);
+// Run once after layout settles, so the initial size matches the styled container.
+requestAnimationFrame(handleResize);
+setTimeout(handleResize, 200);
+
 // Function to refresh the positions of the objects in the scene
 function refreshPositions() {
   const tableRows = document.querySelectorAll('tbody tr');
